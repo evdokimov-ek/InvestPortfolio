@@ -14,6 +14,8 @@
 		014E16C8270864B70096D2D8 /* InvestPortfolio.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 014E16C6270864B70096D2D8 /* InvestPortfolio.xcdatamodeld */; };
 		014E16CA270864BC0096D2D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 014E16C9270864BC0096D2D8 /* Assets.xcassets */; };
 		014E16CD270864BC0096D2D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 014E16CB270864BC0096D2D8 /* LaunchScreen.storyboard */; };
+		014E16E327095E9F0096D2D8 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014E16E227095E9F0096D2D8 /* NetworkManager.swift */; };
+		014E16E52709623F0096D2D8 /* StockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014E16E42709623F0096D2D8 /* StockData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		014E16C9270864BC0096D2D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		014E16CC270864BC0096D2D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		014E16CE270864BC0096D2D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		014E16E227095E9F0096D2D8 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		014E16E42709623F0096D2D8 /* StockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,8 @@
 			isa = PBXGroup;
 			children = (
 				014E16C6270864B70096D2D8 /* InvestPortfolio.xcdatamodeld */,
+				014E16E227095E9F0096D2D8 /* NetworkManager.swift */,
+				014E16E42709623F0096D2D8 /* StockData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -167,6 +173,8 @@
 			files = (
 				014E16C2270864B70096D2D8 /* ViewController.swift in Sources */,
 				014E16BE270864B70096D2D8 /* AppDelegate.swift in Sources */,
+				014E16E52709623F0096D2D8 /* StockData.swift in Sources */,
+				014E16E327095E9F0096D2D8 /* NetworkManager.swift in Sources */,
 				014E16C0270864B70096D2D8 /* SceneDelegate.swift in Sources */,
 				014E16C8270864B70096D2D8 /* InvestPortfolio.xcdatamodeld in Sources */,
 			);
