@@ -5,7 +5,7 @@
 //  Created by 19336088 on 03.10.2021.
 //
 
-import Foundation
+import UIKit
 
 struct NetworkManager {
     
@@ -14,25 +14,28 @@ struct NetworkManager {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { data, response, error in
                 if error == nil {
-                    let decoder = JSONDecoder()
                     if let safeData = data {
+                        let decoder = JSONDecoder()
                         do {
-                        let results = try decoder.decode(Results.self, from: safeData)
-                            DispatchQueue.main.async {
-                                self.stocks = results.result
-                            }
-
+                            let decodedData = try decoder.decode(Results.self, from: safeData)
+                            
+                            let price = Double(decodedData.quoteSummary.result[0].price.regularMarketPrice.fmt) ?? 0
+                            
+                            let name = decodedData.quoteSummary.result[0].price.shortName
+                            
+                            print(name, price)
+                            
                         } catch {
                             print(error)
                         }
+                        
                     }
                 }
             }
             task.resume()
         }
-
-    }
-    func parseJSON() {
         
     }
+    
+    
 }

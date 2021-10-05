@@ -12,6 +12,8 @@ class ViewController: UITableViewController {
     
     var stockArray = [Stock]()
     
+    let networkManager = NetworkManager()
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
@@ -34,7 +36,9 @@ class ViewController: UITableViewController {
         
         let stockTicker = stockArray[indexPath.row].ticker ?? ""
         
-        let refreshAlert = UIAlertController(title: "Deleting", message: "Are you shure, you want to delete \(stockTicker) ?", preferredStyle: .alert)
+        networkManager.fetchData(tcr: stockTicker)
+        
+        let refreshAlert = UIAlertController(title: "Deleting", message: "Are you shure, you want to delete \(stockTicker)?", preferredStyle: .alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction) in
             self.context.delete(self.stockArray[indexPath.row])
