@@ -10,12 +10,16 @@ import CoreData
 
 class ViewController: UITableViewController {
     
+    //MARK: variables
+    
     var stockArray = [Stock]()
     
     let networkManager = NetworkManager()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
+    
+    //MARK: func
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadStocks()
@@ -28,15 +32,14 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "stockCell", for: indexPath)
         let stock = stockArray[indexPath.row]
-        cell.textLabel?.text = stock.name! + "   " + String(format: "%.02f", stock.lastPrice)
+        let name = stock.name ?? ""
+        cell.textLabel?.text = name + "   " + String(format: "%.02f", stock.lastPrice)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let stockTicker = stockArray[indexPath.row].ticker ?? ""
-        
-        networkManager.fetchData(tcr: stockTicker)
         
         let refreshAlert = UIAlertController(title: "Deleting", message: "Are you shure, you want to delete \(stockTicker)?", preferredStyle: .alert)
         
@@ -51,7 +54,9 @@ class ViewController: UITableViewController {
         present(refreshAlert, animated: true, completion: nil)
         
     }
-
+    
+    //MARK: actions
+    
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
         var textField = UITextField()
@@ -60,12 +65,18 @@ class ViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Ticker", style: .default) { action in
             let newStock = Stock(context: self.context)
             if let ticker = textField.text {
-                newStock.ticker = ticker
-                newStock.name = ticker
-                newStock.value = 1
-                newStock.lastPrice = 12.21
-                self.stockArray.append(newStock)
-                self.saveStocks()
+                
+                self.networkManager.fetchData(tcr: ticker) { price, name in
+                    print(price, name)
+                    newStock.ticker = ticker
+                    newStock.lastPrice = price
+                    newStock.name = name
+                    newStock.value = 1
+                    self.stockArray.append(newStock)
+                    self.saveStocks()
+                }
+                
+                
             }
         }
         alert.addTextField { alertTextField in
@@ -75,6 +86,8 @@ class ViewController: UITableViewController {
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
+    
+    //MARK: SaveLoad
     
     func saveStocks() {
         

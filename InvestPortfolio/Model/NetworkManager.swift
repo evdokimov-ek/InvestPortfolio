@@ -8,8 +8,9 @@
 import UIKit
 
 struct NetworkManager {
-    
-    func fetchData(tcr: String) {
+
+    func fetchData(tcr: String, completion: @escaping(Double, String) -> Void){
+
         if let url = URL(string: "https://query1.finance.yahoo.com/v10/finance/quoteSummary/\(tcr)?modules=price") {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { data, response, error in
@@ -20,15 +21,12 @@ struct NetworkManager {
                             let decodedData = try decoder.decode(Results.self, from: safeData)
                             
                             let price = Double(decodedData.quoteSummary.result[0].price.regularMarketPrice.fmt) ?? 0
-                            
                             let name = decodedData.quoteSummary.result[0].price.shortName
-                            
-                            print(name, price)
-                            
+                            completion(price, name)
                         } catch {
                             print(error)
                         }
-                        
+                        return
                     }
                 }
             }
@@ -36,6 +34,5 @@ struct NetworkManager {
         }
         
     }
-    
     
 }
