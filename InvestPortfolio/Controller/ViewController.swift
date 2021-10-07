@@ -33,7 +33,7 @@ class ViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "stockCell", for: indexPath)
         let stock = stockArray[indexPath.row]
         let name = stock.name ?? ""
-        cell.textLabel?.text = name + "   " + String(format: "%.02f", stock.lastPrice)
+        cell.textLabel?.text = String(indexPath.row + 1) + "     " + name + "   " + String(format: "%.02f", stock.lastPrice)
         return cell
     }
     
@@ -65,17 +65,19 @@ class ViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Ticker", style: .default) { action in
             let newStock = Stock(context: self.context)
             if let ticker = textField.text {
-                
+           
                 self.networkManager.fetchData(tcr: ticker) { price, name in
-                    print(price, name)
+                    
                     newStock.ticker = ticker
                     newStock.lastPrice = price
                     newStock.name = name
                     newStock.value = 1
                     self.stockArray.append(newStock)
                     self.saveStocks()
+                    
                 }
                 
+                self.tableView.reloadData()
                 
             }
         }
@@ -96,7 +98,7 @@ class ViewController: UITableViewController {
         } catch {
             print("Error saving context \(error)")
         }
-        self.tableView.reloadData()
+        
     }
     
     func loadStocks() {
